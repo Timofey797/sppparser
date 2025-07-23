@@ -1,0 +1,23 @@
+name: Keep Replit Alive
+
+on:
+  schedule:
+    # Каждые 10 минут
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Replit
+        run: |
+          echo "Pinging Replit..."
+          curl -f "https://f677af64-3fad-4cef-859d-c78937508fb5-00-3tlrfw2kwkq9s.kirk.replit.dev/status" || exit 1
+          echo "Replit is alive!"
+          
+      - name: Trigger processing
+        run: |
+          echo "Triggering bot processing..."
+          curl -f "https://f677af64-3fad-4cef-859d-c78937508fb5-00-3tlrfw2kwkq9s.kirk.replit.dev/run"
+          echo "Processing triggered!"
